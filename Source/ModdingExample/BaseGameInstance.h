@@ -52,8 +52,8 @@ public:
 		if (OriginalPlatformFile) { FPlatformFileManager::Get().SetPlatformFile(*OriginalPlatformFile); }
 #endif
 	}
-
-	bool IsValidPakFile(const FString& PakFilename, int64& OutPakSize, bool bSigned = false)
+	UFUNCTION(BlueprintCallable, Category = "ModLoader")
+		bool IsValidPakFile(const FString& PakFilename, int64& OutPakSize, bool bSigned = false)
 	{
 		if (!FPaths::FileExists(PakFilename)) { return false; }
 		FPakFile PakFile(GetPakPlatformFile(), *PakFilename, bSigned);
@@ -64,9 +64,9 @@ public:
 
 	static void UnRegisterMountPoint(const FString& RootPath, const FString& ContentPath) { FPackageName::UnRegisterMountPoint(RootPath, ContentPath); }
 	UFUNCTION(BlueprintCallable, Category = "ModLoader")
-	static void RegisterMountPoint(const FString& RootPath, const FString& ContentPath) { FPackageName::RegisterMountPoint(RootPath, ContentPath); }
+		static void RegisterMountPoint(const FString& RootPath, const FString& ContentPath) { FPackageName::RegisterMountPoint(RootPath, ContentPath); }
 	UFUNCTION(BlueprintCallable, Category = "ModLoader")
-	bool MountPakFile(const FString& PakFilename, int32 PakOrder, const FString& MountPath)
+		bool MountPakFile(const FString& PakFilename, int32 PakOrder, const FString& MountPath)
 	{
 		bool bResult = false;
 		if (MountPath.Len() > 0) { bResult = GetPakPlatformFile()->Mount(*PakFilename, PakOrder, *MountPath); }
@@ -76,7 +76,7 @@ public:
 
 	bool UnmountPakFile(const FString& PakFilename) { return GetPakPlatformFile()->Unmount(*PakFilename); }
 	UFUNCTION(BlueprintPure)
-	static UClass* LoadClassFromPak(const FString& Filename) {const FString Name = Filename + TEXT(".") + FPackageName::GetShortName(Filename) + TEXT("_C");return StaticLoadClass(UObject::StaticClass(), nullptr, *Name);}
+		static UClass* LoadClassFromPak(const FString& Filename) {const FString Name = Filename + TEXT(".") + FPackageName::GetShortName(Filename) + TEXT("_C");return StaticLoadClass(UObject::StaticClass(), nullptr, *Name);}
 	template<class T>
 	T* LoadObjectFromPak(const FString& Filename)
 	{
@@ -85,7 +85,7 @@ public:
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "ModLoader")
-	static bool GetFilesInRootAndAllSubFolders(TArray<FString>& Files, FString RootFolderFullPath, FString Ext);
+		static bool GetFilesInRootAndAllSubFolders(TArray<FString>& Files, FString RootFolderFullPath, FString Ext);
 
 	virtual void Init() override;
 protected:

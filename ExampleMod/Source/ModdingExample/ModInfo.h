@@ -7,7 +7,7 @@
 #include "ModInfo.generated.h"
 
 /**
- *
+ * 
  */
 UCLASS(Blueprintable)
 class MODDINGEXAMPLE_API UModInfo : public UObject
@@ -15,8 +15,6 @@ class MODDINGEXAMPLE_API UModInfo : public UObject
 	GENERATED_BODY()
 public:
 
-	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
-		void OnModLoaded();
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ModInfo")
 		FString ModName;
 
@@ -30,6 +28,8 @@ public:
 		FString ModVersion;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ModInfo")
-		FString ModActor;
+		bool CustomLevels;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, AssetRegistrySearchable, meta = (EditCondition = CustomLevels, HideEditConditionToggle))
+		TArray<FString> Levels;
 };

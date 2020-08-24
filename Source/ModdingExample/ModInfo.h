@@ -26,4 +26,10 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ModInfo")
 		FString ModVersion;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ModInfo")
+		bool CustomLevels;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, AssetRegistrySearchable, meta = (EditCondition = CustomLevels, HideEditConditionToggle))
+		TArray<FString> Levels;
 };

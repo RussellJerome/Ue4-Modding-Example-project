@@ -2,8 +2,3 @@
 
 
 #include "ModInfo.h"
-
-void UModInfo::OnModLoaded_Implementation()
-{
-
-}
