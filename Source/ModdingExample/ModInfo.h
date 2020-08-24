@@ -15,8 +15,6 @@ class MODDINGEXAMPLE_API UModInfo : public UObject
 	GENERATED_BODY()
 public:
 
-	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
-		void OnModLoaded();
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ModInfo")
 		FString ModName;
 
@@ -28,8 +26,4 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ModInfo")
 		FString ModVersion;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ModInfo")
-		FString ModActor;
-	
 };
