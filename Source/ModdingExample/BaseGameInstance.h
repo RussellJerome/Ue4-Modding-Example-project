@@ -88,11 +88,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "ModLoader")
 		static bool GetFilesInRootAndAllSubFolders(TArray<FString>& Files, FString RootFolderFullPath, FString Ext);
 
-	//UFUNCTION(BlueprintCallable, Category = "ModLoader")
-	//	void LoadMods();
+	UFUNCTION(BlueprintCallable, Category = "ModLoader")
+		void LoadMods();
 
-//	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mods")
-		//TArray<UModInfo*> ModInfoLists2;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mods")
+		TArray<UModInfo*> ModInfoList;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mods")
 		TArray<FString> ModListPak;
 	virtual void Init() override;

@@ -29,22 +29,28 @@ bool UBaseGameInstance::GetFilesInRootAndAllSubFolders(TArray<FString>& Files, F
 	FileManager.FindFilesRecursive(Files, *RootFolderFullPath, *Ext, true, false);
 	return true;
 }
-//Its 1am, I am finishing porting this tomorrow
-/*
+
 void UBaseGameInstance::LoadMods()
 {
-	ModInfoLists2.Empty();
+	ModInfoList.Empty();
 	for (int i = 0; i < ModListPak.Num(); i++)
 	{
 		FString SelectedString = ModListPak[i];
 		FString ClassInfo;
 		ClassInfo = TEXT("/BaseGame/") + SelectedString + TEXT("/ModInfo");
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, ClassInfo);
-		TSubclassOf<class UModInfo> ClassObject;
-		ClassObject = LoadClassFromPak(ClassInfo);
+		UClass* CalledClass = LoadClassFromPak(ClassInfo);
+		if (IsValid(CalledClass))
+		{
+			if (CalledClass->IsChildOf(UModInfo::StaticClass()))
+			{
+				UModInfo* NewModInfo = NewObject<UModInfo>(this, CalledClass);
+				ModInfoList.AddUnique(NewModInfo);
+			}
+		}
 	}
 }
-*/
+
 void UBaseGameInstance::Init()
 {
 	Super::Init();
