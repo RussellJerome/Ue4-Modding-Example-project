@@ -53,7 +53,6 @@ public:
 		if (OriginalPlatformFile) { FPlatformFileManager::Get().SetPlatformFile(*OriginalPlatformFile); }
 #endif
 	}
-	UFUNCTION(BlueprintCallable, Category = "ModLoader")
 		bool IsValidPakFile(const FString& PakFilename, int64& OutPakSize, bool bSigned = false)
 	{
 		if (!FPaths::FileExists(PakFilename)) { return false; }
@@ -64,17 +63,14 @@ public:
 	}
 
 	static void UnRegisterMountPoint(const FString& RootPath, const FString& ContentPath) { FPackageName::UnRegisterMountPoint(RootPath, ContentPath); }
-	UFUNCTION(BlueprintCallable, Category = "ModLoader")
-		static void RegisterMountPoint(const FString& RootPath, const FString& ContentPath) { FPackageName::RegisterMountPoint(RootPath, ContentPath); }
-	UFUNCTION(BlueprintCallable, Category = "ModLoader")
-		bool MountPakFile(const FString& PakFilename, int32 PakOrder, const FString& MountPath)
+	static void RegisterMountPoint(const FString& RootPath, const FString& ContentPath) { FPackageName::RegisterMountPoint(RootPath, ContentPath); }
+	bool MountPakFile(const FString& PakFilename, int32 PakOrder, const FString& MountPath)
 	{
 		bool bResult = false;
 		if (MountPath.Len() > 0) { bResult = GetPakPlatformFile()->Mount(*PakFilename, PakOrder, *MountPath); }
 		else { bResult = GetPakPlatformFile()->Mount(*PakFilename, PakOrder, NULL); }
 		return bResult;
 	}
-
 	bool UnmountPakFile(const FString& PakFilename) { return GetPakPlatformFile()->Unmount(*PakFilename); }
 	UFUNCTION(BlueprintPure)
 		static UClass* LoadClassFromPak(const FString& Filename) {const FString Name = Filename + TEXT(".") + FPackageName::GetShortName(Filename) + TEXT("_C");return StaticLoadClass(UObject::StaticClass(), nullptr, *Name);}
@@ -90,11 +86,10 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "ModLoader")
 		void LoadMods();
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mods")
 		TArray<UModInfo*> ModInfoList;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mods")
-		TArray<FString> ModListPak;
+	
+	TArray<FString> ModListPak;
 	virtual void Init() override;
 protected:
 	FPakPlatformFile* PakPlatformFile = nullptr;

@@ -38,7 +38,6 @@ void UBaseGameInstance::LoadMods()
 		FString SelectedString = ModListPak[i];
 		FString ClassInfo;
 		ClassInfo = TEXT("/BaseGame/") + SelectedString + TEXT("/ModInfo");
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, ClassInfo);
 		UClass* CalledClass = LoadClassFromPak(ClassInfo);
 		if (IsValid(CalledClass))
 		{
@@ -54,6 +53,7 @@ void UBaseGameInstance::LoadMods()
 void UBaseGameInstance::Init()
 {
 	Super::Init();
+	//Rename ModdingExample to your project name, EX: If my project is called WhiteWolf, you would do ../../../WhiteWolf/Content/ 
 	RegisterMountPoint("/BaseGame/","../../../ModdingExample/Content/");
 	TArray<FString> ModFilesArray;
 	FString Path = FPaths::ConvertRelativePathToFull(FPaths::ProjectModsDir());
