@@ -6,6 +6,10 @@
 #include "Misc/FileHelper.h"
 #include "Misc/Paths.h"
 #include "Containers/UnrealString.h"
+#include "HAL/FileManager.h"
+#include "HAL/PlatformFilemanager.h"
+#include "UObject/UObjectGlobals.h"
+
 bool UBaseGameInstance::GetFilesInRootAndAllSubFolders(TArray<FString>& Files, FString RootFolderFullPath, FString Ext)
 {
 	if (RootFolderFullPath.Len() < 1) return false;
@@ -25,9 +29,46 @@ bool UBaseGameInstance::GetFilesInRootAndAllSubFolders(TArray<FString>& Files, F
 	FileManager.FindFilesRecursive(Files, *RootFolderFullPath, *Ext, true, false);
 	return true;
 }
-
+//Its 1am, I am finishing porting this tomorrow
+/*
+void UBaseGameInstance::LoadMods()
+{
+	ModInfoLists2.Empty();
+	for (int i = 0; i < ModListPak.Num(); i++)
+	{
+		FString SelectedString = ModListPak[i];
+		FString ClassInfo;
+		ClassInfo = TEXT("/BaseGame/") + SelectedString + TEXT("/ModInfo");
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, ClassInfo);
+		TSubclassOf<class UModInfo> ClassObject;
+		ClassObject = LoadClassFromPak(ClassInfo);
+	}
+}
+*/
 void UBaseGameInstance::Init()
 {
 	Super::Init();
-	RegisterMountPoint("/BaseGame/", "../../../ModdingExample/Content/");
+	RegisterMountPoint("/BaseGame/","../../../ModdingExample/Content/");
+	TArray<FString> ModFilesArray;
+	FString Path = FPaths::ConvertRelativePathToFull(FPaths::ProjectModsDir());
+	GetFilesInRootAndAllSubFolders(ModFilesArray, Path, "");
+	for (int i = 0; i < ModFilesArray.Num(); i++)
+	{
+		FString SelectedString = ModFilesArray[i];
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, SelectedString);
+		int64 OutSize;
+		if (IsValidPakFile(SelectedString, OutSize, false))
+		{
+			MountPakFile(SelectedString, i, "");
+			FString LeftS;
+			FString RightS;
+			SelectedString.Split("/", &LeftS, &RightS, ESearchCase::IgnoreCase, ESearchDir::FromEnd);
+			RightS.Split(".pak", &LeftS, &RightS, ESearchCase::IgnoreCase, ESearchDir::FromStart);
+			ModListPak.AddUnique(LeftS);
+		}
+		else
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("NotValidPak"));
+		}
+	}
 }
