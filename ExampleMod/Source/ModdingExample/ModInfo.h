@@ -7,7 +7,7 @@
 #include "ModInfo.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS(Blueprintable)
 class MODDINGEXAMPLE_API UModInfo : public UObject
@@ -32,4 +32,10 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, AssetRegistrySearchable, meta = (EditCondition = CustomLevels, HideEditConditionToggle))
 		TArray<FString> Levels;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ModInfo")
+		bool CustomGamemodes;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (EditCondition = CustomGamemodes, HideEditConditionToggle))
+		TArray<FString> GameModes;
 };

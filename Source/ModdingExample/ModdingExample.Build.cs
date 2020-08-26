@@ -8,7 +8,7 @@ public class ModdingExample : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "PakFile"});
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "PakFile", "HeadMountedDisplay"});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
