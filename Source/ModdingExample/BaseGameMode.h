@@ -6,6 +6,7 @@
 #include "GameFramework/GameMode.h"
 #include "Kismet/GameplayStatics.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
+#include "BasePlayerState.h"
 #include "BaseGameMode.generated.h"
 
 /**

@@ -8,8 +8,9 @@ ABaseGameMode::ABaseGameMode()
 	: Super()
 {
 	// set default pawn class to our Blueprinted character
-	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnClassFinder(TEXT("/Game/ThirdPersonBP/Blueprints/ThirdPersonCharacter"));
+	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnClassFinder(TEXT("/Game/Blueprints/Base/BP_BaseCharacter"));
 	DefaultPawnClass = PlayerPawnClassFinder.Class;
+	PlayerStateClass = ABasePlayerState::StaticClass();
 }
 
 void ABaseGameMode::BeginPlay()

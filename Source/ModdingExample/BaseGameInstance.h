@@ -10,6 +10,7 @@
 #include "Misc/App.h"
 #include "Misc/FileHelper.h"
 #include "ModInfo.h"
+#include "StructsAndEnums.h"
 #include "BaseGameInstance.generated.h"
 /**
  * 
@@ -88,7 +89,10 @@ public:
 		void LoadMods();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mods")
 		TArray<UModInfo*> ModInfoList;
-	
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Structs")
+		TArray<FWeaponData> WeaponData;
+
 	TArray<FString> ModListPak;
 	virtual void Init() override;
 protected:
