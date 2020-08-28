@@ -1,5 +1,6 @@
 #pragma once
 #include "Styling/SlateColor.h"
+#include "MainWeapon.h"
 #include "StructsAndEnums.generated.h"
 UENUM(BlueprintType)
 enum EWeaponCategory
@@ -29,8 +30,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Data")
 		int32 Damage;
-
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Data")
-		UClass* WeaponClass;
-
+		TArray<TSubclassOf<AMainWeapon>> WeaponClass;
 };
