@@ -32,5 +32,5 @@ public:
 		int32 Damage;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Data")
-		TArray<TSubclassOf<AMainWeapon>> WeaponClass;
+		TSubclassOf<AMainWeapon> WeaponClass;
 };
