@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/GameMode.h"
 #include "Kismet/GameplayStatics.h"
+#include "BasePlayerState.h"
+#include "BasePlayerController.h"
 #include "BaseGameMode.generated.h"
 
 /**
@@ -20,4 +22,8 @@ public:
 
     UFUNCTION(BlueprintCallable, Category = "GM")
         void PrintFunctionTest();
+
+    UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Spawn")
+    void RequestSpawnCharacter(AController* Controller, TSubclassOf<AActor> Weapon);
+    void RequestSpawnCharacter_Implementation(AController* Controller, TSubclassOf<AActor> Weapon);
 };

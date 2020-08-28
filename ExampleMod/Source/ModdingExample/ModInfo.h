@@ -4,10 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
+#include "StructsAndEnums.h"
 #include "ModInfo.generated.h"
 
 /**
- *
+ * 
  */
 UCLASS(Blueprintable)
 class MODDINGEXAMPLE_API UModInfo : public UObject
@@ -38,4 +39,10 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (EditCondition = CustomGamemodes, HideEditConditionToggle))
 		TArray<FString> GameModes;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ModInfo")
+		bool CustomWeapons;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (EditCondition = CustomWeapons, HideEditConditionToggle))
+		TArray<FWeaponData> Weapons;
 };

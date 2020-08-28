@@ -92,7 +92,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Structs")
 		TArray<FWeaponData> WeaponData;
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mods")
 	TArray<FString> ModListPak;
 	virtual void Init() override;
 protected:

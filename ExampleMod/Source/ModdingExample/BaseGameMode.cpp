@@ -2,6 +2,8 @@
 
 
 #include "BaseGameMode.h"
+#include "GameFramework/PlayerStart.h"
+#include "Containers/Array.h"
 #include "UObject/ConstructorHelpers.h"
 
 ABaseGameMode::ABaseGameMode()
@@ -15,4 +17,9 @@ void ABaseGameMode::BeginPlay()
 
 void ABaseGameMode::PrintFunctionTest()
 {
+}
+
+void ABaseGameMode::RequestSpawnCharacter_Implementation(AController* Controller, TSubclassOf<AActor> Weapon)
+{
+
 }
