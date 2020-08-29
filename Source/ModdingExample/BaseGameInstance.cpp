@@ -73,6 +73,8 @@ void UBaseGameInstance::Init()
 						{
 							WeaponData.Append(NewModInfo->Weapons);
 						}
+						NewModInfo->ConditionalBeginDestroy();
+						NewModInfo = NULL;
 					}
 				}
 			}
