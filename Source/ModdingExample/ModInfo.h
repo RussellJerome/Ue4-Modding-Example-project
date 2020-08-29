@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "StructsAndEnums.h"
+#include "GameFramework/GameModeBase.h"
 #include "ModInfo.generated.h"
 
 /**
@@ -17,32 +18,23 @@ class MODDINGEXAMPLE_API UModInfo : public UObject
 public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ModInfo")
-		FString ModName;
+		FModData ModInfo;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ModInfo")
-		FString Author;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ModInfo")
-		FString ModDetails;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ModInfo")
-		FString ModVersion;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ModInfo")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "LevelInfo")
 		bool CustomLevels;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, AssetRegistrySearchable, meta = (EditCondition = CustomLevels, HideEditConditionToggle))
-		TArray<FString> Levels;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, AssetRegistrySearchable, meta = (EditCondition = CustomLevels, HideEditConditionToggle), Category = "LevelInfo")
+		TArray <TSoftObjectPtr<UWorld>> Levels;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ModInfo")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "GameModeInfo")
 		bool CustomGamemodes;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (EditCondition = CustomGamemodes, HideEditConditionToggle))
-		TArray<FString> GameModes;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (EditCondition = CustomGamemodes, HideEditConditionToggle), Category = "GameModeInfo")
+	TArray<TSubclassOf<AGameModeBase>> GameModes;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ModInfo")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "WeaponInfo")
 		bool CustomWeapons;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (EditCondition = CustomWeapons, HideEditConditionToggle))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (EditCondition = CustomWeapons, HideEditConditionToggle), Category = "WeaponInfo")
 		TArray<FWeaponData> Weapons;
 };

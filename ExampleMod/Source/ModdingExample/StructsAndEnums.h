@@ -34,3 +34,23 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Data")
 		TSubclassOf<AMainWeapon> WeaponClass;
 };
+
+USTRUCT(BlueprintType)
+struct FModData
+{
+	GENERATED_BODY()
+public:
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ModInfo")
+		FString ModName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ModInfo")
+		FString Author;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ModInfo")
+		FString ModDetails;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ModInfo")
+		FString ModVersion;
+};

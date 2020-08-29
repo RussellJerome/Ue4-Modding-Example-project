@@ -30,31 +30,12 @@ bool UBaseGameInstance::GetFilesInRootAndAllSubFolders(TArray<FString>& Files, F
 	return true;
 }
 
-void UBaseGameInstance::LoadMods()
-{
-	ModInfoList.Empty();
-	for (int i = 0; i < ModListPak.Num(); i++)
-	{
-		FString SelectedString = ModListPak[i];
-		FString ClassInfo;
-		ClassInfo = TEXT("/BaseGame/") + SelectedString + TEXT("/ModInfo");
-		UClass* CalledClass = LoadClassFromPak(ClassInfo);
-		if (IsValid(CalledClass))
-		{
-			if (CalledClass->IsChildOf(UModInfo::StaticClass()))
-			{
-				UModInfo* NewModInfo = NewObject<UModInfo>(this, CalledClass);
-				ModInfoList.AddUnique(NewModInfo);
-			}
-		}
-	}
-}
-
 void UBaseGameInstance::Init()
 {
 	Super::Init();
+
 	//Rename ModdingExample to your project name, EX: If my project is called WhiteWolf, you would do ../../../WhiteWolf/Content/ 
-	RegisterMountPoint("/BaseGame/","../../../ModdingExample/Content/");
+	RegisterMountPoint("/BaseGame/", "../../../ModdingExample/Content/");
 	TArray<FString> ModFilesArray;
 	FString Path = FPaths::ConvertRelativePathToFull(FPaths::ProjectModsDir());
 	GetFilesInRootAndAllSubFolders(ModFilesArray, Path, "");
@@ -65,16 +46,37 @@ void UBaseGameInstance::Init()
 		int64 OutSize;
 		if (IsValidPakFile(SelectedString, OutSize, false))
 		{
-			MountPakFile(SelectedString, i, "");
-			FString LeftS;
-			FString RightS;
-			SelectedString.Split("/", &LeftS, &RightS, ESearchCase::IgnoreCase, ESearchDir::FromEnd);
-			RightS.Split(".pak", &LeftS, &RightS, ESearchCase::IgnoreCase, ESearchDir::FromStart);
-			ModListPak.AddUnique(LeftS);
-		}
-		else
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("NotValidPak"));
+			if (MountPakFile(SelectedString, i, ""))
+			{
+				FString LeftS;
+				FString RightS;
+				SelectedString.Split("/", &LeftS, &RightS, ESearchCase::IgnoreCase, ESearchDir::FromEnd);
+				RightS.Split(".pak", &LeftS, &RightS, ESearchCase::IgnoreCase, ESearchDir::FromStart);
+				FString ClassInfo;
+				ClassInfo = TEXT("/BaseGame/") + LeftS + TEXT("/ModInfo");
+				UClass* CalledClass = LoadClassFromPak(ClassInfo);
+				if (IsValid(CalledClass))
+				{
+					if (CalledClass->IsChildOf(UModInfo::StaticClass()))
+					{
+						UModInfo* NewModInfo = NewObject<UModInfo>(this, CalledClass);
+						ModData.Add(NewModInfo->ModInfo);
+						if (NewModInfo->CustomLevels)
+						{
+							LevelList.Append(NewModInfo->Levels);
+						}
+						if (NewModInfo->CustomGamemodes)
+						{
+							GameModes.Append(NewModInfo->GameModes);
+						}
+						if (NewModInfo->CustomWeapons)
+						{
+							WeaponData.Append(NewModInfo->Weapons);
+						}
+					}
+				}
+			}
+
 		}
 	}
 }

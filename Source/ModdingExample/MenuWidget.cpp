@@ -6,9 +6,4 @@
 void UMenuWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
-	UBaseGameInstance * GameInstance = Cast<UBaseGameInstance >(UGameplayStatics::GetGameInstance(GetWorld()));
-	if (GameInstance)
-	{
-		GameInstance->LoadMods();
-	}
 }

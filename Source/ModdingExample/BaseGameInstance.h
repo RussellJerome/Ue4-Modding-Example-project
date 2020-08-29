@@ -15,7 +15,12 @@
 /**
  * 
  */
-/* Thank You Joseph for condensing this shit**/
+/* Thank You Joseph for condensing this shit
+   For Future Info, if you want to make any func Blueprintable add either
+   UFUNCTION(BlueprintCallable, Category = "ModLoader")
+   UFUNCTION(BlueprintPure)
+   Depending on what it is
+**/
 
 UCLASS()
 class MODDINGEXAMPLE_API UBaseGameInstance : public UGameInstance
@@ -54,6 +59,7 @@ public:
 		if (OriginalPlatformFile) { FPlatformFileManager::Get().SetPlatformFile(*OriginalPlatformFile); }
 #endif
 	}
+		UFUNCTION(BlueprintCallable, Category = "ModLoader")
 		bool IsValidPakFile(const FString& PakFilename, int64& OutPakSize, bool bSigned = false)
 	{
 		if (!FPaths::FileExists(PakFilename)) { return false; }
@@ -64,7 +70,9 @@ public:
 	}
 
 	static void UnRegisterMountPoint(const FString& RootPath, const FString& ContentPath) { FPackageName::UnRegisterMountPoint(RootPath, ContentPath); }
+	UFUNCTION(BlueprintCallable, Category = "ModLoader")
 	static void RegisterMountPoint(const FString& RootPath, const FString& ContentPath) { FPackageName::RegisterMountPoint(RootPath, ContentPath); }
+	UFUNCTION(BlueprintCallable, Category = "ModLoader")
 	bool MountPakFile(const FString& PakFilename, int32 PakOrder, const FString& MountPath)
 	{
 		bool bResult = false;
@@ -85,15 +93,17 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "ModLoader")
 		static bool GetFilesInRootAndAllSubFolders(TArray<FString>& Files, FString RootFolderFullPath, FString Ext);
 
-	UFUNCTION(BlueprintCallable, Category = "ModLoader")
-		void LoadMods();
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mods")
-		TArray<UModInfo*> ModInfoList;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Structs")
 		TArray<FWeaponData> WeaponData;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mods")
-	TArray<FString> ModListPak;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, AssetRegistrySearchable, meta = (EditCondition = CustomLevels, HideEditConditionToggle), Category = "GameInfo")
+		TArray <TSoftObjectPtr<UWorld>> LevelList;
+	//List of all GameModes to be loaded
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GameInfo")
+		TArray<TSubclassOf<AGameModeBase>> GameModes;
+	//List Of Loaded ModData
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GameInfo")
+		TArray<FModData> ModData;
 	virtual void Init() override;
 protected:
 	FPakPlatformFile* PakPlatformFile = nullptr;
