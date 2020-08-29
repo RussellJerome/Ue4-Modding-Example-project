@@ -11,6 +11,12 @@ enum EWeaponCategory
 	WEP_Sniper	UMETA(Displayname = "Sniper")
 };
 
+UENUM(BlueprintType)
+enum EMatchType
+{
+	DeathMatch	UMETA(Displayname = "DeathMatch"),
+	TeamDeathmatch	UMETA(Displayname = "TeamDeathmatch")
+};
 
 
 USTRUCT(BlueprintType)

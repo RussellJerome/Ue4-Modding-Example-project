@@ -8,6 +8,7 @@
 #include "Blueprint/WidgetBlueprintLibrary.h"
 #include "BasePlayerState.h"
 #include "BasePlayerController.h"
+#include "StructsAndEnums.h"
 #include "BaseGameMode.generated.h"
 
 /**
@@ -20,6 +21,9 @@ class MODDINGEXAMPLE_API ABaseGameMode : public AGameMode
 public:
     ABaseGameMode();
     virtual void BeginPlay() override;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Match")
+        TEnumAsByte <EMatchType> MatchType;
 
     UFUNCTION(BlueprintCallable, Category = "GM")
         void PrintFunctionTest();
