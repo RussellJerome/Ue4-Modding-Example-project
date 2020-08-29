@@ -3,9 +3,12 @@
 
 #include "BasePlayerState.h"
 #include "Net/UnrealNetwork.h"
+/*
 void ABasePlayerState::GetLifetimeReplicatedProps(TArray< FLifetimeProperty > & OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(ABasePlayerState, Team);
 }
+*/
+void ABasePlayerState::SetTeamNum(int32 NewTeamNumber) { TeamNumber = NewTeamNumber; }

@@ -9,7 +9,11 @@
 #include "BasePlayerState.h"
 #include "BasePlayerController.h"
 #include "StructsAndEnums.h"
+#include "BaseGameState.h"
 #include "BaseGameMode.generated.h"
+
+class ABasePlayerState;
+//class ABaseGameState;
 
 /**
  * 
@@ -21,7 +25,9 @@ class MODDINGEXAMPLE_API ABaseGameMode : public AGameMode
 public:
     ABaseGameMode();
     virtual void BeginPlay() override;
-
+    virtual void PostLogin(APlayerController* NewPlayer) override;
+    virtual void InitGameState() override;
+ 
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Match")
         TEnumAsByte <EMatchType> MatchType;
 
@@ -31,4 +37,7 @@ public:
     UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Spawn")
     void RequestSpawnCharacter(AController* Controller, TSubclassOf<AActor> Weapon);
     void RequestSpawnCharacter_Implementation(AController* Controller, TSubclassOf<AActor> Weapon);
+protected:
+    UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Teams")
+        int32 NumTeams = 2;
 };

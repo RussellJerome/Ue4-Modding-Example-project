@@ -9,9 +9,6 @@
 ABaseGameMode::ABaseGameMode()
 	: Super()
 {
-	// set default pawn class to our Blueprinted character
-	//static ConstructorHelpers::FClassFinder<APawn> PlayerPawnClassFinder(TEXT("/Game/Blueprints/Base/BP_BaseCharacter"));
-	//DefaultPawnClass = PlayerPawnClassFinder.Class;
 	PlayerStateClass = ABasePlayerState::StaticClass();
 	PlayerControllerClass = ABasePlayerController::StaticClass();
 }
@@ -20,7 +17,6 @@ void ABaseGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 	UWidgetBlueprintLibrary::SetInputMode_GameOnly(UGameplayStatics::GetPlayerController(GetWorld(), 0));
-	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("NotValidPak"));
 }
 
 void ABaseGameMode::PrintFunctionTest()
@@ -30,5 +26,19 @@ void ABaseGameMode::PrintFunctionTest()
 
 void ABaseGameMode::RequestSpawnCharacter_Implementation(AController* Controller, TSubclassOf<AActor> Weapon)
 {
+}
 
+void ABaseGameMode::InitGameState()
+{
+	Super::InitGameState();
+	ABaseGameState* const MyGameState = Cast<ABaseGameState>(GameState);
+	if (MyGameState) { MyGameState->NumTeams = NumTeams; }
+}
+
+void ABaseGameMode::PostLogin(APlayerController* NewPlayer)
+{
+	ABasePlayerState* NewPlayerState = CastChecked<ABasePlayerState>(NewPlayer->PlayerState);
+	const int32 TeamNum = FMath::RandRange(1,2);
+	NewPlayerState->SetTeamNum(TeamNum);
+	Super::PostLogin(NewPlayer);
 }

@@ -14,6 +14,10 @@ class MODDINGEXAMPLE_API ABasePlayerState : public APlayerState
 {
 	GENERATED_BODY()
 public:
-	UPROPERTY(replicated, EditDefaultsOnly, BlueprintReadWrite, Category = "Teams")
-		int Team;
+	void SetTeamNum(int32 NewTeamNumber);
+	UFUNCTION(BlueprintPure)
+	int32 GetTeamNum() const { return TeamNumber; };
+protected:
+	UPROPERTY(Transient)
+		int32 TeamNumber;
 };

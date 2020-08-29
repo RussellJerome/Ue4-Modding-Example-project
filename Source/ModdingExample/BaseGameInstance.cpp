@@ -17,14 +17,7 @@ bool UBaseGameInstance::GetFilesInRootAndAllSubFolders(TArray<FString>& Files, F
 	IFileManager& FileManager = IFileManager::Get();
 	if (!Ext.Contains(TEXT("*")))
 	{
-		if (Ext == "")
-		{
-			Ext = "*.*";
-		}
-		else
-		{
-			Ext = (Ext.Left(1) == ".") ? "*" + Ext : "*." + Ext;
-		}
+		Ext = (Ext.Left(1) == ".") ? "*" + Ext : "*." + Ext;
 	}
 	FileManager.FindFilesRecursive(Files, *RootFolderFullPath, *Ext, true, false);
 	return true;
@@ -38,7 +31,7 @@ void UBaseGameInstance::Init()
 	RegisterMountPoint("/BaseGame/", "../../../ModdingExample/Content/");
 	TArray<FString> ModFilesArray;
 	FString Path = FPaths::ConvertRelativePathToFull(FPaths::ProjectModsDir());
-	GetFilesInRootAndAllSubFolders(ModFilesArray, Path, "");
+	GetFilesInRootAndAllSubFolders(ModFilesArray, Path, ".pak");
 	for (int i = 0; i < ModFilesArray.Num(); i++)
 	{
 		FString SelectedString = ModFilesArray[i];
@@ -61,18 +54,9 @@ void UBaseGameInstance::Init()
 					{
 						UModInfo* NewModInfo = NewObject<UModInfo>(this, CalledClass);
 						ModData.Add(NewModInfo->ModInfo);
-						if (NewModInfo->CustomLevels)
-						{
-							LevelList.Append(NewModInfo->Levels);
-						}
-						if (NewModInfo->CustomGamemodes)
-						{
-							GameModes.Append(NewModInfo->GameModes);
-						}
-						if (NewModInfo->CustomWeapons)
-						{
-							WeaponData.Append(NewModInfo->Weapons);
-						}
+						LevelList.Append(NewModInfo->Levels);
+						GameModes.Append(NewModInfo->GameModes);
+						WeaponData.Append(NewModInfo->Weapons);
 						NewModInfo->ConditionalBeginDestroy();
 						NewModInfo = NULL;
 					}
