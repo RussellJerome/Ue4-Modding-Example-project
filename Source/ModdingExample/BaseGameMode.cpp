@@ -38,7 +38,7 @@ void ABaseGameMode::InitGameState()
 void ABaseGameMode::PostLogin(APlayerController* NewPlayer)
 {
 	ABasePlayerState* NewPlayerState = CastChecked<ABasePlayerState>(NewPlayer->PlayerState);
-	const int32 TeamNum = FMath::RandRange(1,2);
+	const int32 TeamNum = FMath::RandRange(1, NumTeams);
 	NewPlayerState->SetTeamNum(TeamNum);
 	Super::PostLogin(NewPlayer);
 }
