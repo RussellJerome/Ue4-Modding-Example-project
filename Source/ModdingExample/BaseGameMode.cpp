@@ -4,6 +4,7 @@
 #include "BaseGameMode.h"
 #include "GameFramework/PlayerStart.h"
 #include "Containers/Array.h"
+#include "BaseGameInstance.h"
 #include "UObject/ConstructorHelpers.h"
 
 ABaseGameMode::ABaseGameMode()
@@ -31,8 +32,8 @@ void ABaseGameMode::RequestSpawnCharacter_Implementation(AController* Controller
 void ABaseGameMode::InitGameState()
 {
 	Super::InitGameState();
-	ABaseGameState* const MyGameState = Cast<ABaseGameState>(GameState);
-	if (MyGameState) { MyGameState->NumTeams = NumTeams; }
+	//ABaseGameState* const MyGameState = Cast<ABaseGameState>(GameState);
+//	MyGameState->NumTeams = NumTeams;
 }
 
 void ABaseGameMode::PostLogin(APlayerController* NewPlayer)

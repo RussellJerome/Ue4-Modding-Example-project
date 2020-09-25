@@ -52,12 +52,11 @@ void UBaseGameInstance::Init()
 				{
 					if (CalledClass->IsChildOf(UModInfo::StaticClass()))
 					{
-						UModInfo* NewModInfo = NewObject<UModInfo>(this, CalledClass);
+						UModInfo* NewModInfo = Cast<UModInfo>(CalledClass->GetDefaultObject());
 						ModData.Add(NewModInfo->ModInfo);
 						LevelList.Append(NewModInfo->Levels);
 						GameModes.Append(NewModInfo->GameModes);
 						WeaponData.Append(NewModInfo->Weapons);
-						NewModInfo->ConditionalBeginDestroy();
 						NewModInfo = NULL;
 					}
 				}

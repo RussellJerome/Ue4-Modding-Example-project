@@ -2,6 +2,8 @@
 
 
 #include "BasePlayerController.h"
+#include "BaseGameInstance.h"
+#include "StructsAndEnums.h"
 #include "BaseGameMode.h"
 void ABasePlayerController::SpawnPlayer_Implementation(TSubclassOf<AActor> Weapon)
 {
