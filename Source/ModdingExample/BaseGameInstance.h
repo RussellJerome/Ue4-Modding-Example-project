@@ -68,10 +68,6 @@ public:
 		OutPakSize = PakFile.TotalSize();
 		return true;
 	}
-
-	static void UnRegisterMountPoint(const FString& RootPath, const FString& ContentPath) { FPackageName::UnRegisterMountPoint(RootPath, ContentPath); }
-	UFUNCTION(BlueprintCallable, Category = "ModLoader")
-	static void RegisterMountPoint(const FString& RootPath, const FString& ContentPath) { FPackageName::RegisterMountPoint(RootPath, ContentPath); }
 	UFUNCTION(BlueprintCallable, Category = "ModLoader")
 	bool MountPakFile(const FString& PakFilename, int32 PakOrder, const FString& MountPath)
 	{

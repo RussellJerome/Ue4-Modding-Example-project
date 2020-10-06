@@ -26,9 +26,6 @@ bool UBaseGameInstance::GetFilesInRootAndAllSubFolders(TArray<FString>& Files, F
 void UBaseGameInstance::Init()
 {
 	Super::Init();
-
-	//Rename ModdingExample to your project name, EX: If my project is called WhiteWolf, you would do ../../../WhiteWolf/Content/ 
-	RegisterMountPoint("/BaseGame/", "../../../ModdingExample/Content/");
 	TArray<FString> ModFilesArray;
 	FString Path = FPaths::ConvertRelativePathToFull(FPaths::ProjectModsDir());
 	GetFilesInRootAndAllSubFolders(ModFilesArray, Path, ".pak");
@@ -46,18 +43,20 @@ void UBaseGameInstance::Init()
 				SelectedString.Split("/", &LeftS, &RightS, ESearchCase::IgnoreCase, ESearchDir::FromEnd);
 				RightS.Split(".pak", &LeftS, &RightS, ESearchCase::IgnoreCase, ESearchDir::FromStart);
 				FString ClassInfo;
-				ClassInfo = TEXT("/BaseGame/") + LeftS + TEXT("/ModInfo");
+				ClassInfo = TEXT("/Game/") + LeftS + TEXT("/ModInfo");
 				UClass* CalledClass = LoadClassFromPak(ClassInfo);
 				if (IsValid(CalledClass))
 				{
 					if (CalledClass->IsChildOf(UModInfo::StaticClass()))
 					{
-						UModInfo* NewModInfo = Cast<UModInfo>(CalledClass->GetDefaultObject());
-						ModData.Add(NewModInfo->ModInfo);
-						LevelList.Append(NewModInfo->Levels);
-						GameModes.Append(NewModInfo->GameModes);
-						WeaponData.Append(NewModInfo->Weapons);
-						NewModInfo = NULL;
+						if (UModInfo* NewModInfo = Cast<UModInfo>(CalledClass->GetDefaultObject()))
+						{
+							ModData.Add(NewModInfo->ModInfo);
+							LevelList.Append(NewModInfo->Levels);
+							GameModes.Append(NewModInfo->GameModes);
+							WeaponData.Append(NewModInfo->Weapons);
+							NewModInfo = NULL;
+						};
 					}
 				}
 			}
